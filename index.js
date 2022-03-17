@@ -50,6 +50,12 @@ const playGame = () => {
   console.log("Game should begin!");
   //draw snake and food
   //check if key is up/down/left/right
+
+  // KEY CODES:
+  // left = 37
+  // up = 38
+  // right = 39
+  // down = 40
 };
 
 window.addEventListener("keypress", gameCountdown);
