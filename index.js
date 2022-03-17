@@ -1,5 +1,6 @@
 let gameStarted = false;
 
+// establishing canvas on the page
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -29,7 +30,7 @@ ctx.fillText(
   canvas.height / 2 + 15
 );
 
-//to be called on enter key click
+// function where the action starts! Called on keypress
 const gameCountdown = (e) => {
   if (!gameStarted && e.keyCode === 13) {
     //Remove the instructions text
@@ -39,7 +40,7 @@ const gameCountdown = (e) => {
     ctx.fill();
     gameStarted = true;
     //then display countdown
-    //code to go insied this if statement!
+    //code to go inside this if statement!
   } else {
     playGame();
   }
@@ -53,5 +54,4 @@ const playGame = () => {
 
 window.addEventListener("keypress", gameCountdown);
 
-// function for game play...
 // want to add a score to the screen & highscore (local storage)
