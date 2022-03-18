@@ -1,4 +1,8 @@
 let gameStarted = false;
+let countdownText = 4;
+const countDownAudio = new Audio("countdown.wav"); // beep mp3
+const foodEatenAudio = ""; // munch mp3
+const gameOverAudio = ""; // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -9,7 +13,7 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
-// displaying score on canvas
+// displaying score label on canvas
 ctx.font = "16px monospace";
 ctx.fillStyle = "white";
 ctx.textAlign = "center";
@@ -31,7 +35,7 @@ ctx.fillText(
 );
 
 // function where the action starts! Called on keypress
-const gameCountdown = (e) => {
+const startGamePlay = (e) => {
   if (!gameStarted && e.keyCode === 13) {
     //Remove the instructions text
     ctx.beginPath();
@@ -39,14 +43,46 @@ const gameCountdown = (e) => {
     ctx.fillStyle = "black";
     ctx.fill();
     gameStarted = true;
-    //then display countdown
-    //code to go inside this if statement!
+
+    //Play sound and call countdown func
+    countDownAudio.play();
+    displayCountDown();
   } else {
     playGame();
   }
 };
 
-const playGame = () => {
+// put settimout inside delay func to omit repetition
+const delay = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), 800);
+  });
+};
+
+// function to display countdown
+const displayCountDown = () => {
+  countdownText > 1 ? countdownText-- : (countdownText = "GO!");
+
+  Promise.resolve()
+    .then(() => {
+      ctx.font = "42px monospace";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText(countdownText, canvas.height / 2, canvas.width / 2);
+    })
+    .then(() => delay())
+    .then(() => {
+      ctx.beginPath();
+      ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
+      ctx.fillStyle = "black";
+      ctx.fill();
+    })
+    .then(() => {
+      if (countdownText !== "GO!") displayCountDown();
+    });
+};
+
+const drawSnake = () => {
   console.log("Game should begin!");
   //draw snake and food
   //check if key is up/down/left/right
@@ -58,6 +94,6 @@ const playGame = () => {
   // down = 40
 };
 
-window.addEventListener("keypress", gameCountdown);
+window.addEventListener("keypress", startGamePlay);
 
 // want to add a score to the screen & highscore (local storage)
