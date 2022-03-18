@@ -1,4 +1,7 @@
 let gameStarted = false;
+const countDownAudio = new Audio("countdown.wav"); // beep mp3
+const foodEatenAudio = ""; // munch mp3
+const gameOverAudio = ""; // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -39,6 +42,7 @@ const gameCountdown = (e) => {
     ctx.fillStyle = "black";
     ctx.fill();
     gameStarted = true;
+    countDownAudio.play();
     //then display countdown
     //code to go inside this if statement!
   } else {
