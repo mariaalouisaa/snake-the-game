@@ -1,3 +1,5 @@
+// ------------ BOARD SETUP -------------
+
 let gameStarted = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
@@ -34,6 +36,8 @@ ctx.fillText(
   canvas.height / 2 + 15
 );
 
+// ------------ COUNTDOWN -------------
+
 // function where the action starts! Called on keypress
 const startGamePlay = (e) => {
   if (!gameStarted && e.keyCode === 13) {
@@ -48,7 +52,9 @@ const startGamePlay = (e) => {
     countDownAudio.play();
     displayCountDown();
   } else {
-    playGame();
+    null;
+    // if(e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) changeDirection(e.keyCode);
+    // this function should move the snake depending what arrow is clicked...
   }
 };
 
@@ -80,30 +86,55 @@ const displayCountDown = () => {
       ctx.fill();
     })
     .then(() => {
-      if (countdownText !== "GO!") displayCountDown();
+      countdownText !== "GO!" ? displayCountDown() : playSnake();
     });
 };
 
-let snake = [
-  { x: 200, y: 200 },
-  { x: 190, y: 200 },
-  { x: 180, y: 200 },
-  { x: 170, y: 200 },
-  { x: 160, y: 200 },
+// ------------ PLAY SNAKE -------------
+
+let snakeParts = [
+  { x: 200, y: 220 },
+  { x: 180, y: 220 },
+  { x: 160, y: 220 },
 ];
 
-const drawSnake = () => {
-  console.log("Game should begin!");
-  //draw snake and food
-  //check if key is up/down/left/right
+// The amount of the pixel the snake will move along x & y
+// automatic direction is snake moving right
+let xDirection = 20;
+let yDirection = 0;
 
-  // KEY CODES:
-  // left = 37
-  // up = 38
-  // right = 39
-  // down = 40
+const playSnake = () => {
+  setTimeout(() => {
+    // wrapped in settimeout for smooth gameplay
+    // func to clear the board to go here
+    // func to move the snake to go here
+    drawSnake();
+  }, 200);
 };
 
+const drawSnake = () => {
+  snakeParts.forEach((part) => {
+    ctx.fillStyle = "green";
+    ctx.fillRect(part.x, part.y, 20, 20);
+    ctx.strokeRect(part.x, part.y, 20, 20); // gives outline to each part
+  });
+};
+
+const moveSnake = () => {
+  const newBlock = { x: snake[0].x + xDirection, y: snake[0].y };
+  snake.unshift(firstBlock); // add newBlock to front of snake
+  snake.pop(); // remove last block
+};
+
+// eventListner on the page
 window.addEventListener("keypress", startGamePlay);
 
+// KEY CODES:
+// left = 37
+// up = 38
+// right = 39
+// down = 40
+
+//draw snake and food
+//check if key is up/down/left/right
 // want to add a score to the screen & highscore (local storage)
