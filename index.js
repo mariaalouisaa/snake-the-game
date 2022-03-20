@@ -13,7 +13,7 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
-// displaying score label on canvas
+// displaying 'score' text on canvas
 ctx.font = "16px monospace";
 ctx.fillStyle = "white";
 ctx.textAlign = "center";
@@ -65,13 +65,15 @@ const displayCountDown = () => {
 
   Promise.resolve()
     .then(() => {
+      // display the curret countdown text
       ctx.font = "42px monospace";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText(countdownText, canvas.height / 2, canvas.width / 2);
     })
-    .then(() => delay())
+    .then(() => delay()) // settimeout
     .then(() => {
+      // fill the text area (to get rid of old text)
       ctx.beginPath();
       ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
       ctx.fillStyle = "black";
@@ -81,6 +83,14 @@ const displayCountDown = () => {
       if (countdownText !== "GO!") displayCountDown();
     });
 };
+
+let snake = [
+  { x: 200, y: 200 },
+  { x: 190, y: 200 },
+  { x: 180, y: 200 },
+  { x: 170, y: 200 },
+  { x: 160, y: 200 },
+];
 
 const drawSnake = () => {
   console.log("Game should begin!");
