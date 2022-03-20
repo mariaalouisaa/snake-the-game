@@ -36,16 +36,23 @@ ctx.fillText(
   canvas.height / 2 + 15
 );
 
+// ------------ CLEAR BOARD FUNC -------------
+//used throughtout all the sections
+
+const clearBoard = () => {
+  ctx.beginPath();
+  ctx.rect(0, 30, canvas.width, canvas.height - 10);
+  ctx.fillStyle = "red"; // change to black later!!
+  ctx.fill();
+};
+
 // ------------ COUNTDOWN -------------
 
 // function where the action starts! Called on keypress
 const startGamePlay = (e) => {
   if (!gameStarted && e.keyCode === 13) {
     //Remove the instructions text
-    ctx.beginPath();
-    ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
-    ctx.fillStyle = "black";
-    ctx.fill();
+    clearBoard();
     gameStarted = true;
 
     //Play sound and call countdown func
@@ -79,11 +86,8 @@ const displayCountDown = () => {
     })
     .then(() => delay()) // settimeout
     .then(() => {
-      // fill the text area (to get rid of old text)
-      ctx.beginPath();
-      ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
-      ctx.fillStyle = "black";
-      ctx.fill();
+      // clearBoard to fet rid of old text
+      clearBoard();
     })
     .then(() => {
       countdownText !== "GO!" ? displayCountDown() : playSnake();
@@ -106,10 +110,11 @@ let yDirection = 0;
 const playSnake = () => {
   setTimeout(() => {
     // wrapped in settimeout for smooth gameplay
-    // func to clear the board to go here
-    // func to move the snake to go here
+    clearBoard();
+    moveSnake();
     drawSnake();
-  }, 200);
+    playSnake();
+  }, 600);
 };
 
 const drawSnake = () => {
@@ -121,9 +126,9 @@ const drawSnake = () => {
 };
 
 const moveSnake = () => {
-  const newBlock = { x: snake[0].x + xDirection, y: snake[0].y };
-  snake.unshift(firstBlock); // add newBlock to front of snake
-  snake.pop(); // remove last block
+  const newBlock = { x: snakeParts[0].x + xDirection, y: snakeParts[0].y };
+  snakeParts.unshift(newBlock); // add newBlock to front of snake
+  snakeParts.pop(); // remove last block
 };
 
 // eventListner on the page
