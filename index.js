@@ -42,7 +42,7 @@ ctx.fillText(
 const clearBoard = () => {
   ctx.beginPath();
   ctx.rect(0, 30, canvas.width, canvas.height - 10);
-  ctx.fillStyle = "red"; // change to black later!!
+  ctx.fillStyle = "grey"; // change to black later!! Only grey so I can see it atm
   ctx.fill();
 };
 
@@ -166,6 +166,12 @@ window.addEventListener("keydown", startGamePlay);
 // right = 39
 // down = 40
 
-//draw snake and food
-//check if key is up/down/left/right
+// ---- NEXT STEPS!! ----
+// draw food in random position (math random()) NOT top 30px
+// Collision detections...
+// -if snake hits food grow snake
+// -if snake hits wall game over
+// -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
+// add noise when snake eats food
+// add noise to game over
