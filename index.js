@@ -58,10 +58,13 @@ const startGamePlay = (e) => {
     //Play sound and call countdown func
     countDownAudio.play();
     displayCountDown();
-  } else {
-    null;
-    // if(e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) changeDirection(e.keyCode);
-    // this function should move the snake depending what arrow is clicked...
+  } else if (
+    e.keyCode === 37 ||
+    e.keyCode === 38 ||
+    e.keyCode === 39 ||
+    e.keyCode === 40
+  ) {
+    changeDirection(e.keyCode); //or move the snake
   }
 };
 
@@ -126,13 +129,35 @@ const drawSnake = () => {
 };
 
 const moveSnake = () => {
-  const newBlock = { x: snakeParts[0].x + xDirection, y: snakeParts[0].y };
+  const newBlock = {
+    x: snakeParts[0].x + xDirection,
+    y: snakeParts[0].y + yDirection,
+  };
   snakeParts.unshift(newBlock); // add newBlock to front of snake
   snakeParts.pop(); // remove last block
 };
 
+const changeDirection = (key) => {
+  if (key === 37) {
+    xDirection = -20;
+    yDirection = 0;
+  }
+  if (key === 38) {
+    yDirection = -20;
+    xDirection = 0;
+  }
+  if (key === 39) {
+    xDirection = 20;
+    yDirection = 0;
+  }
+  if (key === 40) {
+    yDirection = 20;
+    xDirection = 0;
+  }
+};
+
 // eventListner on the page
-window.addEventListener("keypress", startGamePlay);
+window.addEventListener("keydown", startGamePlay);
 
 // KEY CODES:
 // left = 37
