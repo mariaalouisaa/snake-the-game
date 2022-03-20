@@ -138,19 +138,20 @@ const moveSnake = () => {
 };
 
 const changeDirection = (key) => {
-  if (key === 37) {
+  //each if() checks key pressed and doesn't allow snake to move backwards
+  if (key === 37 && xDirection !== 20) {
     xDirection = -20;
     yDirection = 0;
   }
-  if (key === 38) {
+  if (key === 38 && yDirection !== 20) {
     yDirection = -20;
     xDirection = 0;
   }
-  if (key === 39) {
+  if (key === 39 && xDirection !== -20) {
     xDirection = 20;
     yDirection = 0;
   }
-  if (key === 40) {
+  if (key === 40 && yDirection !== -20) {
     yDirection = 20;
     xDirection = 0;
   }
