@@ -20,4 +20,4 @@
 
 --- 
 
-⭐ Will be hosted on GitHub pages ⭐
+⭐ Hosted on [GitHub pages](https://mariaalouisaa.github.io/snake-the-game/) ⭐
