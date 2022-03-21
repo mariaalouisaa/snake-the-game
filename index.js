@@ -1,3 +1,5 @@
+// ------------ BOARD SETUP -------------
+
 let gameStarted = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
@@ -13,7 +15,7 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
-// displaying score label on canvas
+// displaying 'score' text on canvas
 ctx.font = "16px monospace";
 ctx.fillStyle = "white";
 ctx.textAlign = "center";
@@ -34,21 +36,35 @@ ctx.fillText(
   canvas.height / 2 + 15
 );
 
+// ------------ CLEAR BOARD FUNC -------------
+//used throughtout all the sections
+
+const clearBoard = () => {
+  ctx.beginPath();
+  ctx.rect(0, 30, canvas.width, canvas.height - 10);
+  ctx.fillStyle = "grey"; // change to black later!! Only grey so I can see it atm
+  ctx.fill();
+};
+
+// ------------ COUNTDOWN -------------
+
 // function where the action starts! Called on keypress
 const startGamePlay = (e) => {
   if (!gameStarted && e.keyCode === 13) {
     //Remove the instructions text
-    ctx.beginPath();
-    ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
-    ctx.fillStyle = "black";
-    ctx.fill();
+    clearBoard();
     gameStarted = true;
 
     //Play sound and call countdown func
     countDownAudio.play();
     displayCountDown();
-  } else {
-    playGame();
+  } else if (
+    e.keyCode === 37 ||
+    e.keyCode === 38 ||
+    e.keyCode === 39 ||
+    e.keyCode === 40
+  ) {
+    changeDirection(e.keyCode); //or move the snake
   }
 };
 
@@ -65,35 +81,97 @@ const displayCountDown = () => {
 
   Promise.resolve()
     .then(() => {
+      // display the curret countdown text
       ctx.font = "42px monospace";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText(countdownText, canvas.height / 2, canvas.width / 2);
     })
-    .then(() => delay())
+    .then(() => delay()) // settimeout
     .then(() => {
-      ctx.beginPath();
-      ctx.rect(0, canvas.height / 2 - 30, canvas.width, 50);
-      ctx.fillStyle = "black";
-      ctx.fill();
+      // clearBoard to fet rid of old text
+      clearBoard();
     })
     .then(() => {
-      if (countdownText !== "GO!") displayCountDown();
+      countdownText !== "GO!" ? displayCountDown() : playSnake();
     });
 };
 
-const drawSnake = () => {
-  console.log("Game should begin!");
-  //draw snake and food
-  //check if key is up/down/left/right
+// ------------ PLAY SNAKE -------------
 
-  // KEY CODES:
-  // left = 37
-  // up = 38
-  // right = 39
-  // down = 40
+let snakeParts = [
+  { x: 200, y: 220 },
+  { x: 180, y: 220 },
+  { x: 160, y: 220 },
+];
+
+// The amount of the pixel the snake will move along x & y
+// automatic direction is snake moving right
+let xDirection = 20;
+let yDirection = 0;
+
+const playSnake = () => {
+  setTimeout(() => {
+    // wrapped in settimeout for smooth gameplay
+    clearBoard();
+    moveSnake();
+    drawSnake();
+    playSnake();
+  }, 600);
 };
 
-window.addEventListener("keypress", startGamePlay);
+const drawSnake = () => {
+  snakeParts.forEach((part) => {
+    ctx.fillStyle = "green";
+    ctx.fillRect(part.x, part.y, 20, 20);
+    ctx.strokeRect(part.x, part.y, 20, 20); // gives outline to each part
+  });
+};
 
+const moveSnake = () => {
+  const newBlock = {
+    x: snakeParts[0].x + xDirection,
+    y: snakeParts[0].y + yDirection,
+  };
+  snakeParts.unshift(newBlock); // add newBlock to front of snake
+  snakeParts.pop(); // remove last block
+};
+
+const changeDirection = (key) => {
+  //each if() checks key pressed and doesn't allow snake to move backwards
+  if (key === 37 && xDirection !== 20) {
+    xDirection = -20;
+    yDirection = 0;
+  }
+  if (key === 38 && yDirection !== 20) {
+    yDirection = -20;
+    xDirection = 0;
+  }
+  if (key === 39 && xDirection !== -20) {
+    xDirection = 20;
+    yDirection = 0;
+  }
+  if (key === 40 && yDirection !== -20) {
+    yDirection = 20;
+    xDirection = 0;
+  }
+};
+
+// eventListner on the page
+window.addEventListener("keydown", startGamePlay);
+
+// KEY CODES:
+// left = 37
+// up = 38
+// right = 39
+// down = 40
+
+// ---- NEXT STEPS!! ----
+// draw food in random position (math random()) NOT top 30px
+// Collision detections...
+// -if snake hits food grow snake
+// -if snake hits wall game over
+// -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
+// add noise when snake eats food
+// add noise to game over
