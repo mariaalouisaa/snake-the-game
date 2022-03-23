@@ -3,7 +3,7 @@
 let gameStarted = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
-const foodEatenAudio = ""; // munch mp3
+const foodEatenAudio = new Audio("eating.wav"); // munch mp3
 const gameOverAudio = ""; // game over mp3
 
 // establishing canvas on the page
@@ -201,6 +201,7 @@ const changeDirection = (key) => {
 const collisionDetect = () => {
   //if first block of snake and food have same position
   if (snakeParts[0].x === foodx && snakeParts[0].y === foody) {
+    foodEatenAudio.play();
     score = score + 10;
     displayScore();
     generateFood();
@@ -232,3 +233,4 @@ displayScore(); //display default score on load
 // add noise when snake eats food
 // add noise to game over
 // at 50 speed up! then again later
+// reset score when snake moves (to fix bug)
