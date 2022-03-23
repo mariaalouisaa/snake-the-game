@@ -1,6 +1,7 @@
 // ------------ BOARD SETUP -------------
 
 let gameStarted = false;
+let isGameOver = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
 const foodEatenAudio = new Audio("eating.wav"); // munch mp3
@@ -153,6 +154,7 @@ let xDirection = 20;
 let yDirection = 0;
 
 const playSnake = () => {
+  if (isGameOver) return;
   setTimeout(() => {
     // wrapped in settimeout for smooth gameplay
     clearBoard();
@@ -242,9 +244,10 @@ const collisionDetect = () => {
 // ------------ GAME OVER -------------
 
 const gameOver = () => {
-  console.log("GAMEOVER");
+  isGameOver = true;
+  console.log("GAMEOVER"); //remove this later!
   //check this works!!!
-  if (score > Number(highscore)) {
+  if (Number(score) > Number(highscore)) {
     localStorage.setItem("storedScore", score.toString());
   }
 };
