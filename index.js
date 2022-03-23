@@ -88,10 +88,11 @@ const clearBoard = () => {
 
 // function where the action starts! Called on keypress
 const startGamePlay = (e) => {
-  if (!gameStarted && e.keyCode === 13) {
+  if ((!gameStarted && e.keyCode === 13) || (isGameOver && e.keyCode === 13)) {
     //Remove the instructions text
     clearBoard();
     gameStarted = true;
+    isGameOver = false; //reset if this is a replay
 
     //Play sound and call countdown func
     countDownAudio.play();
@@ -238,10 +239,10 @@ const collisionDetect = () => {
 
   //check if front of snake passes edge of board
   if (
-    snakeParts[0].x > 460 ||
+    snakeParts[0].x > canvas.width - 20 ||
     snakeParts[0].x < 0 ||
     snakeParts[0].y < 0 ||
-    snakeParts[0].y > 460
+    snakeParts[0].y > canvas.height - 20
   ) {
     gameOver();
   }
@@ -256,12 +257,19 @@ const gameOver = () => {
   // display game over text
   ctx.font = "80px monospace";
   ctx.fillStyle = "white";
-  ctx.textAlign = "center";
   ctx.fillText("GAME", canvas.width / 2, canvas.height / 2 - 15);
-  ctx.font = "80px monospace";
-  ctx.fillStyle = "white";
-  ctx.textAlign = "center";
   ctx.fillText("OVER", canvas.width / 2, canvas.height / 2 + 45);
+  ctx.font = "17px monospace";
+  ctx.fillText("click enter to replay", canvas.width / 2, canvas.height - 45);
+
+  //reset countdown
+  countdownText = 4;
+  //reset snake
+  snakeParts = [
+    { x: 200, y: 220 },
+    { x: 180, y: 220 },
+    { x: 160, y: 220 },
+  ];
 };
 
 // eventListner on the page
@@ -277,6 +285,6 @@ displayScore(); //display default score on load
 // down = 40
 
 // ---- NEXT STEPS!! ----
-// Collision detections...
-// -if snake hits self game over
+// Final collision detection -if snake hits self game over
 // add mute button??
+// Promp user to replay after game over -> dont forget to reset gamestarted & isgameover variables!
