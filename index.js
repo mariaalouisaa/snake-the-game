@@ -131,7 +131,7 @@ let snakeParts = [
 let foodx;
 let foody;
 
-let speed = 300;
+let speed = 250;
 
 // The amount of the pixel the snake will move along x & y
 // automatic direction is snake moving right
@@ -142,6 +142,7 @@ const playSnake = () => {
   setTimeout(() => {
     // wrapped in settimeout for smooth gameplay
     clearBoard();
+    displayScore();
     moveSnake();
     drawSnake();
     playSnake();
@@ -151,7 +152,7 @@ const playSnake = () => {
 const generateFood = () => {
   let random1 = Math.random() * 420; //max board width
   foodx = random1 - (random1 % 20); // must be multiple of 20
-  let random2 = Math.random() * (420 - 30) + 30; // not top 30px of board
+  let random2 = Math.random() * (420 - 60) + 60; // not top 60px of board
   foody = random2 - (random2 % 20);
 };
 
@@ -203,7 +204,6 @@ const collisionDetect = () => {
   if (snakeParts[0].x === foodx && snakeParts[0].y === foody) {
     foodEatenAudio.play();
     score = score + 10;
-    displayScore();
     generateFood();
     const newBlock = {
       x: snakeParts[snakeParts.length - 1].x + xDirection,
@@ -211,6 +211,8 @@ const collisionDetect = () => {
     };
     snakeParts.push(newBlock); //add new block to end of snake
   }
+  if (score === 50) speed = 150; //speed up game
+  if (score === 100) speed = 100; //speed up game
 };
 
 // eventListner on the page
@@ -230,7 +232,6 @@ displayScore(); //display default score on load
 // -if snake hits wall game over
 // -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
-// add noise when snake eats food
 // add noise to game over
 // at 50 speed up! then again later
-// reset score when snake moves (to fix bug)
+// add mute button??
