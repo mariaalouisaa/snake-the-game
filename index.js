@@ -278,8 +278,5 @@ displayScore(); //display default score on load
 
 // ---- NEXT STEPS!! ----
 // Collision detections...
-// -if snake hits wall game over
 // -if snake hits self game over
-// want to add a score to the screen & highscore (local storage)
-// add noise to game over
 // add mute button??
