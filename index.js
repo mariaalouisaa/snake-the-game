@@ -15,11 +15,34 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
-// displaying 'score' text on canvas
-ctx.font = "16px monospace";
-ctx.fillStyle = "white";
-ctx.textAlign = "center";
-ctx.fillText("score:", 370, 20);
+// displaying the score text on canvas
+let score = 0;
+let display = "000";
+
+const displayScore = () => {
+  //clear old text
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, 30);
+  ctx.fillStyle = "black";
+  ctx.fill();
+
+  //format score for the display
+  score < 10
+    ? null
+    : score < 100
+    ? (display = "00")
+    : score < 1000
+    ? (display = "0")
+    : score < 10000
+    ? (display = "")
+    : null;
+
+  //write new score
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText(`score: ${display}${score}`, 390, 25);
+};
 
 // display instructions to start
 ctx.font = "20px monospace";
@@ -110,8 +133,6 @@ let foody;
 
 let speed = 300;
 
-let score = 0;
-
 // The amount of the pixel the snake will move along x & y
 // automatic direction is snake moving right
 let xDirection = 20;
@@ -178,14 +199,16 @@ const changeDirection = (key) => {
 };
 
 const collisionDetect = () => {
+  //if first block of snake and food have same position
   if (snakeParts[0].x === foodx && snakeParts[0].y === foody) {
+    score = score + 10;
+    displayScore();
     generateFood();
-    score = score + 100;
     const newBlock = {
       x: snakeParts[snakeParts.length - 1].x + xDirection,
       y: snakeParts[snakeParts.length - 1].y + yDirection,
     };
-    snakeParts.push(newBlock);
+    snakeParts.push(newBlock); //add new block to end of snake
   }
 };
 
@@ -193,6 +216,7 @@ const collisionDetect = () => {
 window.addEventListener("keydown", startGamePlay);
 
 generateFood(); //generate first food position on load
+displayScore(); //display default score on load
 
 // KEY CODES:
 // left = 37
@@ -202,9 +226,9 @@ generateFood(); //generate first food position on load
 
 // ---- NEXT STEPS!! ----
 // Collision detections...
-// -if snake hits food grow snake
 // -if snake hits wall game over
 // -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
 // add noise when snake eats food
 // add noise to game over
+// at 50 speed up! then again later
