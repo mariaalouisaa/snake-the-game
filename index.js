@@ -226,16 +226,22 @@ const collisionDetect = () => {
       y: snakeParts[snakeParts.length - 1].y + yDirection,
     };
     snakeParts.push(newBlock); //add new block to end of snake
+
+    //if new highscore then update in local storage
+    if (Number(score) > Number(highscore)) {
+      highscore = score;
+      localStorage.setItem("storedScore", score.toString());
+    }
   }
   if (score === 50) speed = 150; //speed up game
   if (score === 100) speed = 100; //speed up game
 
-  //check if front of snake touches edge of board
+  //check if front of snake passes edge of board
   if (
-    snakeParts[0].x === 460 ||
-    snakeParts[0].x === 0 ||
-    snakeParts[0].y === 0 ||
-    snakeParts[0].y === 460
+    snakeParts[0].x > 460 ||
+    snakeParts[0].x < 0 ||
+    snakeParts[0].y < 0 ||
+    snakeParts[0].y > 460
   ) {
     gameOver();
   }
@@ -246,11 +252,6 @@ const collisionDetect = () => {
 const gameOver = () => {
   isGameOver = true; // this stops the playGame() reccursion
   gameOverAudio.play();
-
-  //if new highscore then update in local storage
-  if (Number(score) > Number(highscore)) {
-    localStorage.setItem("storedScore", score.toString());
-  }
 
   // display game over text
   ctx.font = "80px monospace";
