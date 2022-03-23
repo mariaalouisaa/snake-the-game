@@ -5,7 +5,7 @@
 --- 
 
 #### Features to be included:
-- [ ] Control a snake using the keyboard.
+✅ Control a snake using the keyboard.
 - [ ] Game ends if snake touches itself.
 - [ ] Touching “food” makes snake grow longer/score go up.
 
