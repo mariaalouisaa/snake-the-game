@@ -238,10 +238,10 @@ const collisionDetect = () => {
 
   //check if front of snake passes edge of board
   if (
-    snakeParts[0].x > 460 ||
+    snakeParts[0].x > canvas.width - 20 ||
     snakeParts[0].x < 0 ||
     snakeParts[0].y < 0 ||
-    snakeParts[0].y > 460
+    snakeParts[0].y > canvas.height - 20
   ) {
     gameOver();
   }
