@@ -42,7 +42,7 @@ ctx.fillText(
 const clearBoard = () => {
   ctx.beginPath();
   ctx.rect(0, 30, canvas.width, canvas.height - 10);
-  ctx.fillStyle = "grey"; // change to black later!! Only grey so I can see it atm
+  ctx.fillStyle = "black";
   ctx.fill();
 };
 
@@ -108,6 +108,8 @@ let snakeParts = [
 let foodx;
 let foody;
 
+let speed = 300;
+
 let score = 0;
 
 // The amount of the pixel the snake will move along x & y
@@ -122,19 +124,18 @@ const playSnake = () => {
     moveSnake();
     drawSnake();
     playSnake();
-  }, 500);
+  }, speed);
 };
 
 const generateFood = () => {
-  //draw the food first so it's beneth the snake
-  let random1 = Math.random() * 420;
+  let random1 = Math.random() * 420; //max board width
   foodx = random1 - (random1 % 20); // must be multiple of 20
   let random2 = Math.random() * (420 - 30) + 30; // not top 30px of board
   foody = random2 - (random2 % 20);
 };
 
 const drawSnake = () => {
-  //draw the food first so its beneth the snake
+  //draw the food first so it's beneth the snake
   ctx.fillStyle = "red";
   ctx.fillRect(foodx, foody, 20, 20);
   ctx.strokeRect(foodx, foody, 20, 20); // block outline
