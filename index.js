@@ -13,7 +13,7 @@ const ctx = canvas.getContext("2d");
 // setting canvas background
 canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-// fillRect() params = (x start, y start, width, height)
+// fillRect() paramaters = (x start, y start, width, height)
 
 // display instructions to start
 ctx.font = "20px monospace";
@@ -38,7 +38,7 @@ if (!localStorage.getItem("storedScore")) {
 
 let highscore = localStorage.getItem("storedScore");
 
-// ------------ SCORE FUNCS ------------
+// ------------ SCORE DISPLAY ------------
 
 // displaying the score text on canvas
 let score = 0;
@@ -65,12 +65,12 @@ const displayScore = () => {
   //write new score
   ctx.font = "16px monospace";
   ctx.fillStyle = "white";
-  ctx.fillText(`score: ${display}${score}`, 390, 25);
+  ctx.fillText(`score: ${display}${score}`, 390, 20);
 
   // write highscore
   ctx.font = "16px monospace";
   ctx.fillStyle = "white";
-  ctx.fillText(`best: ${highscore}`, 50, 25);
+  ctx.fillText(`best: ${highscore}`, 50, 20);
 };
 
 // ------------ CLEAR BOARD FUNC -------------
@@ -227,6 +227,26 @@ const collisionDetect = () => {
   }
   if (score === 50) speed = 150; //speed up game
   if (score === 100) speed = 100; //speed up game
+
+  //check if front of snake touches edge of board
+  if (
+    snakeParts[0].x === 460 ||
+    snakeParts[0].x === 0 ||
+    snakeParts[0].y === 0 ||
+    snakeParts[0].y === 460
+  ) {
+    gameOver();
+  }
+};
+
+// ------------ GAME OVER -------------
+
+const gameOver = () => {
+  console.log("GAMEOVER");
+  //check this works!!!
+  if (score > Number(highscore)) {
+    localStorage.setItem("storedScore", score.toString());
+  }
 };
 
 // eventListner on the page
