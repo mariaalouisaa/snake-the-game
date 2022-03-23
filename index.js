@@ -244,12 +244,22 @@ const collisionDetect = () => {
 // ------------ GAME OVER -------------
 
 const gameOver = () => {
-  isGameOver = true;
-  console.log("GAMEOVER"); //remove this later!
-  //check this works!!!
+  isGameOver = true; // this stops the playGame() reccursion
+
+  //if new highscore then update in local storage
   if (Number(score) > Number(highscore)) {
     localStorage.setItem("storedScore", score.toString());
   }
+
+  // display game over text
+  ctx.font = "80px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText("GAME", canvas.width / 2, canvas.height / 2 - 15);
+  ctx.font = "80px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText("OVER", canvas.width / 2, canvas.height / 2 + 45);
 };
 
 // eventListner on the page
