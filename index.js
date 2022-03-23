@@ -108,6 +108,8 @@ let snakeParts = [
 let foodx;
 let foody;
 
+let score = 0;
+
 // The amount of the pixel the snake will move along x & y
 // automatic direction is snake moving right
 let xDirection = 20;
@@ -120,7 +122,7 @@ const playSnake = () => {
     moveSnake();
     drawSnake();
     playSnake();
-  }, 600);
+  }, 500);
 };
 
 const generateFood = () => {
@@ -174,7 +176,17 @@ const changeDirection = (key) => {
   }
 };
 
-const collisionDetect = () => {};
+const collisionDetect = () => {
+  if (snakeParts[0].x === foodx && snakeParts[0].y === foody) {
+    generateFood();
+    score = score + 100;
+    const newBlock = {
+      x: snakeParts[snakeParts.length - 1].x + xDirection,
+      y: snakeParts[snakeParts.length - 1].y + yDirection,
+    };
+    snakeParts.push(newBlock);
+  }
+};
 
 // eventListner on the page
 window.addEventListener("keydown", startGamePlay);
@@ -188,7 +200,6 @@ generateFood(); //generate first food position on load
 // down = 40
 
 // ---- NEXT STEPS!! ----
-// draw food in random position (math random()) NOT top 30px
 // Collision detections...
 // -if snake hits food grow snake
 // -if snake hits wall game over
