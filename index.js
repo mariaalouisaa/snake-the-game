@@ -89,7 +89,7 @@ const displayCountDown = () => {
     })
     .then(() => delay()) // settimeout
     .then(() => {
-      // clearBoard to fet rid of old text
+      // clearBoard to get rid of old text
       clearBoard();
     })
     .then(() => {
@@ -104,6 +104,9 @@ let snakeParts = [
   { x: 180, y: 220 },
   { x: 160, y: 220 },
 ];
+
+let foodx;
+let foody;
 
 // The amount of the pixel the snake will move along x & y
 // automatic direction is snake moving right
@@ -120,12 +123,26 @@ const playSnake = () => {
   }, 600);
 };
 
+const generateFood = () => {
+  //draw the food first so it's beneth the snake
+  let random1 = Math.random() * 420;
+  foodx = random1 - (random1 % 20); // must be multiple of 20
+  let random2 = Math.random() * (420 - 30) + 30; // not top 30px of board
+  foody = random2 - (random2 % 20);
+};
+
 const drawSnake = () => {
+  //draw the food first so its beneth the snake
+  ctx.fillStyle = "red";
+  ctx.fillRect(foodx, foody, 20, 20);
+  ctx.strokeRect(foodx, foody, 20, 20); // block outline
+  //draw the snake
   snakeParts.forEach((part) => {
     ctx.fillStyle = "green";
     ctx.fillRect(part.x, part.y, 20, 20);
-    ctx.strokeRect(part.x, part.y, 20, 20); // gives outline to each part
+    ctx.strokeRect(part.x, part.y, 20, 20);
   });
+  collisionDetect();
 };
 
 const moveSnake = () => {
@@ -157,8 +174,12 @@ const changeDirection = (key) => {
   }
 };
 
+const collisionDetect = () => {};
+
 // eventListner on the page
 window.addEventListener("keydown", startGamePlay);
+
+generateFood(); //generate first food position on load
 
 // KEY CODES:
 // left = 37
