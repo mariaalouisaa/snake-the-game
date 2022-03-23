@@ -1,10 +1,11 @@
 // ------------ BOARD SETUP -------------
 
 let gameStarted = false;
+let isGameOver = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
 const foodEatenAudio = new Audio("eating.wav"); // munch mp3
-const gameOverAudio = ""; // game over mp3
+const gameOverAudio = new Audio("gameover.wav"); // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -13,7 +14,32 @@ const ctx = canvas.getContext("2d");
 // setting canvas background
 canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-// fillRect() params = (x start, y start, width, height)
+// fillRect() paramaters = (x start, y start, width, height)
+
+// display instructions to start
+ctx.font = "20px monospace";
+ctx.fillStyle = "white";
+ctx.textAlign = "center";
+ctx.fillText(
+  "Click enter to begin the game.",
+  canvas.width / 2,
+  canvas.height / 2 - 15
+);
+ctx.fillText(
+  "Use the arrow keys to play!",
+  canvas.width / 2,
+  canvas.height / 2 + 15
+);
+
+// ------------ LOCAL STORAGE ------------
+
+if (!localStorage.getItem("storedScore")) {
+  localStorage.setItem("storedScore", "0");
+}
+
+let highscore = localStorage.getItem("storedScore");
+
+// ------------ SCORE DISPLAY ------------
 
 // displaying the score text on canvas
 let score = 0;
@@ -40,24 +66,13 @@ const displayScore = () => {
   //write new score
   ctx.font = "16px monospace";
   ctx.fillStyle = "white";
-  ctx.textAlign = "center";
-  ctx.fillText(`score: ${display}${score}`, 390, 25);
-};
+  ctx.fillText(`score: ${display}${score}`, 390, 20);
 
-// display instructions to start
-ctx.font = "20px monospace";
-ctx.fillStyle = "white";
-ctx.textAlign = "center";
-ctx.fillText(
-  "Click enter to begin the game.",
-  canvas.width / 2,
-  canvas.height / 2 - 15
-);
-ctx.fillText(
-  "Use the arrow keys to play!",
-  canvas.width / 2,
-  canvas.height / 2 + 15
-);
+  // write highscore
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "white";
+  ctx.fillText(`best: ${highscore}`, 50, 20);
+};
 
 // ------------ CLEAR BOARD FUNC -------------
 //used throughtout all the sections
@@ -139,6 +154,7 @@ let xDirection = 20;
 let yDirection = 0;
 
 const playSnake = () => {
+  if (isGameOver) return;
   setTimeout(() => {
     // wrapped in settimeout for smooth gameplay
     clearBoard();
@@ -210,9 +226,42 @@ const collisionDetect = () => {
       y: snakeParts[snakeParts.length - 1].y + yDirection,
     };
     snakeParts.push(newBlock); //add new block to end of snake
+
+    //if new highscore then update in local storage
+    if (Number(score) > Number(highscore)) {
+      highscore = score;
+      localStorage.setItem("storedScore", score.toString());
+    }
   }
   if (score === 50) speed = 150; //speed up game
   if (score === 100) speed = 100; //speed up game
+
+  //check if front of snake passes edge of board
+  if (
+    snakeParts[0].x > 460 ||
+    snakeParts[0].x < 0 ||
+    snakeParts[0].y < 0 ||
+    snakeParts[0].y > 460
+  ) {
+    gameOver();
+  }
+};
+
+// ------------ GAME OVER -------------
+
+const gameOver = () => {
+  isGameOver = true; // this stops the playGame() reccursion
+  gameOverAudio.play();
+
+  // display game over text
+  ctx.font = "80px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText("GAME", canvas.width / 2, canvas.height / 2 - 15);
+  ctx.font = "80px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText("OVER", canvas.width / 2, canvas.height / 2 + 45);
 };
 
 // eventListner on the page
@@ -229,8 +278,5 @@ displayScore(); //display default score on load
 
 // ---- NEXT STEPS!! ----
 // Collision detections...
-// -if snake hits wall game over
 // -if snake hits self game over
-// want to add a score to the screen & highscore (local storage)
-// add noise to game over
 // add mute button??
