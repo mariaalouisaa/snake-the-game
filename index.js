@@ -3,7 +3,7 @@
 let gameStarted = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
-const foodEatenAudio = ""; // munch mp3
+const foodEatenAudio = new Audio("eating.wav"); // munch mp3
 const gameOverAudio = ""; // game over mp3
 
 // establishing canvas on the page
@@ -15,11 +15,34 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
-// displaying 'score' text on canvas
-ctx.font = "16px monospace";
-ctx.fillStyle = "white";
-ctx.textAlign = "center";
-ctx.fillText("score:", 370, 20);
+// displaying the score text on canvas
+let score = 0;
+let display = "000";
+
+const displayScore = () => {
+  //clear old text
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, 30);
+  ctx.fillStyle = "black";
+  ctx.fill();
+
+  //format score for the display
+  score < 10
+    ? null
+    : score < 100
+    ? (display = "00")
+    : score < 1000
+    ? (display = "0")
+    : score < 10000
+    ? (display = "")
+    : null;
+
+  //write new score
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText(`score: ${display}${score}`, 390, 25);
+};
 
 // display instructions to start
 ctx.font = "20px monospace";
@@ -42,7 +65,7 @@ ctx.fillText(
 const clearBoard = () => {
   ctx.beginPath();
   ctx.rect(0, 30, canvas.width, canvas.height - 10);
-  ctx.fillStyle = "grey"; // change to black later!! Only grey so I can see it atm
+  ctx.fillStyle = "black";
   ctx.fill();
 };
 
@@ -89,7 +112,7 @@ const displayCountDown = () => {
     })
     .then(() => delay()) // settimeout
     .then(() => {
-      // clearBoard to fet rid of old text
+      // clearBoard to get rid of old text
       clearBoard();
     })
     .then(() => {
@@ -105,6 +128,11 @@ let snakeParts = [
   { x: 160, y: 220 },
 ];
 
+let foodx;
+let foody;
+
+let speed = 250;
+
 // The amount of the pixel the snake will move along x & y
 // automatic direction is snake moving right
 let xDirection = 20;
@@ -114,18 +142,32 @@ const playSnake = () => {
   setTimeout(() => {
     // wrapped in settimeout for smooth gameplay
     clearBoard();
+    displayScore();
     moveSnake();
     drawSnake();
     playSnake();
-  }, 600);
+  }, speed);
+};
+
+const generateFood = () => {
+  let random1 = Math.random() * 420; //max board width
+  foodx = random1 - (random1 % 20); // must be multiple of 20
+  let random2 = Math.random() * (420 - 60) + 60; // not top 60px of board
+  foody = random2 - (random2 % 20);
 };
 
 const drawSnake = () => {
+  //draw the food first so it's beneth the snake
+  ctx.fillStyle = "red";
+  ctx.fillRect(foodx, foody, 20, 20);
+  ctx.strokeRect(foodx, foody, 20, 20); // block outline
+  //draw the snake
   snakeParts.forEach((part) => {
     ctx.fillStyle = "green";
     ctx.fillRect(part.x, part.y, 20, 20);
-    ctx.strokeRect(part.x, part.y, 20, 20); // gives outline to each part
+    ctx.strokeRect(part.x, part.y, 20, 20);
   });
+  collisionDetect();
 };
 
 const moveSnake = () => {
@@ -157,8 +199,27 @@ const changeDirection = (key) => {
   }
 };
 
+const collisionDetect = () => {
+  //if first block of snake and food have same position
+  if (snakeParts[0].x === foodx && snakeParts[0].y === foody) {
+    foodEatenAudio.play();
+    score = score + 10;
+    generateFood();
+    const newBlock = {
+      x: snakeParts[snakeParts.length - 1].x + xDirection,
+      y: snakeParts[snakeParts.length - 1].y + yDirection,
+    };
+    snakeParts.push(newBlock); //add new block to end of snake
+  }
+  if (score === 50) speed = 150; //speed up game
+  if (score === 100) speed = 100; //speed up game
+};
+
 // eventListner on the page
 window.addEventListener("keydown", startGamePlay);
+
+generateFood(); //generate first food position on load
+displayScore(); //display default score on load
 
 // KEY CODES:
 // left = 37
@@ -167,11 +228,9 @@ window.addEventListener("keydown", startGamePlay);
 // down = 40
 
 // ---- NEXT STEPS!! ----
-// draw food in random position (math random()) NOT top 30px
 // Collision detections...
-// -if snake hits food grow snake
 // -if snake hits wall game over
 // -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
-// add noise when snake eats food
 // add noise to game over
+// add mute button??
