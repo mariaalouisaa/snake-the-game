@@ -233,5 +233,4 @@ displayScore(); //display default score on load
 // -if snake hits self game over
 // want to add a score to the screen & highscore (local storage)
 // add noise to game over
-// at 50 speed up! then again later
 // add mute button??
