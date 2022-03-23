@@ -5,7 +5,7 @@ let isGameOver = false;
 let countdownText = 4;
 const countDownAudio = new Audio("countdown.wav"); // beep mp3
 const foodEatenAudio = new Audio("eating.wav"); // munch mp3
-const gameOverAudio = ""; // game over mp3
+const gameOverAudio = new Audio("gameover.wav"); // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -245,6 +245,7 @@ const collisionDetect = () => {
 
 const gameOver = () => {
   isGameOver = true; // this stops the playGame() reccursion
+  gameOverAudio.play();
 
   //if new highscore then update in local storage
   if (Number(score) > Number(highscore)) {
