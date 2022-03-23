@@ -7,11 +7,11 @@
 #### Features to be included:
 ✅ Control a snake using the keyboard.
 - [ ] Game ends if snake touches itself.
-- [ ] Touching “food” makes snake grow longer/score go up.
+✅ Touching “food” makes snake grow longer/score go up.
 
 #### Stretch goals: 
 - [ ] Save scores in localStorage to show best attempts.
-- [ ] Speed game up as score gets higher.
+✅ Speed game up as score gets higher.
 
 #### Learning outcomes: 
 - [ ] Keyboard event handlers
