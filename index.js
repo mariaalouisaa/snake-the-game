@@ -15,6 +15,31 @@ canvas.fillStyle = "black";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 // fillRect() params = (x start, y start, width, height)
 
+// display instructions to start
+ctx.font = "20px monospace";
+ctx.fillStyle = "white";
+ctx.textAlign = "center";
+ctx.fillText(
+  "Click enter to begin the game.",
+  canvas.width / 2,
+  canvas.height / 2 - 15
+);
+ctx.fillText(
+  "Use the arrow keys to play!",
+  canvas.width / 2,
+  canvas.height / 2 + 15
+);
+
+// ------------ LOCAL STORAGE ------------
+
+if (!localStorage.getItem("storedScore")) {
+  localStorage.setItem("storedScore", "0");
+}
+
+let highscore = localStorage.getItem("storedScore");
+
+// ------------ SCORE FUNCS ------------
+
 // displaying the score text on canvas
 let score = 0;
 let display = "000";
@@ -40,24 +65,13 @@ const displayScore = () => {
   //write new score
   ctx.font = "16px monospace";
   ctx.fillStyle = "white";
-  ctx.textAlign = "center";
   ctx.fillText(`score: ${display}${score}`, 390, 25);
-};
 
-// display instructions to start
-ctx.font = "20px monospace";
-ctx.fillStyle = "white";
-ctx.textAlign = "center";
-ctx.fillText(
-  "Click enter to begin the game.",
-  canvas.width / 2,
-  canvas.height / 2 - 15
-);
-ctx.fillText(
-  "Use the arrow keys to play!",
-  canvas.width / 2,
-  canvas.height / 2 + 15
-);
+  // write highscore
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "white";
+  ctx.fillText(`best: ${highscore}`, 50, 25);
+};
 
 // ------------ CLEAR BOARD FUNC -------------
 //used throughtout all the sections
