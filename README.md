@@ -2,22 +2,33 @@
 
 ### My attempt at recreating the classic retro game **SNAKE** 🐍 in vanilla JS!
 
+*Almost entirely made with the `canvas` element*.
+
 --- 
 
-### Features to be included:
-✅ Control a snake using the keyboard.
+### Features include:
+- 🐍 `eventListners` to enable the use of the keyboard
+- 🍎 JS collision detection to make the snake grow longer & for game over 
+- 🌟 High score saved to `localStorage`
+- 🕹️ Game speend increases as the score gets higher with aid of `setTimeout`
+- 🎵 `audio` implemented for maximum user experience
+
+
+**Main learning outcomes => working with canvas and managing a complex game state.**
+
+---
+
+### Still to do: 
 - [ ] Game ends if snake touches itself.
+- [ ] Have a mute button (and functionality to mute page)
+- [ ] Add a favicon
+- [ ] Research resposive design for canvas & unit testing for canvas
 
-✅ Touching “food” makes snake grow longer/score go up.
+*Please see issue for more information.*
 
-### Stretch goals: 
-✅ Save scores in localStorage to show best attempts.
-✅ Speed game up as score gets higher.
+---
 
-### Learning outcomes: 
-- [ ] Keyboard event handlers
-- [ ] Managing complex game state
-- [ ] Collision detection
+#### Screenshots of project coming soon!
 
 --- 
 
