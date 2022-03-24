@@ -3,9 +3,9 @@
 let gameStarted = false;
 let isGameOver = false;
 let countdownText = 4;
-const countDownAudio = new Audio("../media/countdown.wav"); // beep mp3
-const foodEatenAudio = new Audio("../media/eating.wav"); // munch mp3
-const gameOverAudio = new Audio("../media/gameover.wav"); // game over mp3
+const countDownAudio = new Audio("countdown.wav"); // beep mp3
+const foodEatenAudio = new Audio("eating.wav"); // munch mp3
+const gameOverAudio = new Audio("gameover.wav"); // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -290,4 +290,3 @@ displayScore(); //display default score on load
 // ---- NEXT STEPS!! ----
 // Final collision detection -if snake hits self game over
 // add mute button??
-// Promp user to replay after game over -> dont forget to reset gamestarted & isgameover variables!
