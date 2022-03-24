@@ -3,9 +3,9 @@
 let gameStarted = false;
 let isGameOver = false;
 let countdownText = 4;
-const countDownAudio = new Audio("countdown.wav"); // beep mp3
-const foodEatenAudio = new Audio("eating.wav"); // munch mp3
-const gameOverAudio = new Audio("gameover.wav"); // game over mp3
+const countDownAudio = new Audio("../media/countdown.wav"); // beep mp3
+const foodEatenAudio = new Audio("../media/eating.wav"); // munch mp3
+const gameOverAudio = new Audio("../media/gameover.wav"); // game over mp3
 
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
@@ -54,7 +54,7 @@ const displayScore = () => {
 
   //format score for the display
   score < 10
-    ? null
+    ? (display = "000")
     : score < 100
     ? (display = "00")
     : score < 1000
@@ -91,6 +91,7 @@ const startGamePlay = (e) => {
   if ((!gameStarted && e.keyCode === 13) || (isGameOver && e.keyCode === 13)) {
     //Remove the instructions text
     clearBoard();
+    displayScore();
     gameStarted = true;
     isGameOver = false; //reset if this is a replay
 
@@ -270,6 +271,8 @@ const gameOver = () => {
     { x: 180, y: 220 },
     { x: 160, y: 220 },
   ];
+  //reset score
+  score = 0;
 };
 
 // eventListner on the page
