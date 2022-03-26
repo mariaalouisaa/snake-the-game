@@ -14,6 +14,7 @@
 - 🎵 `audio` implemented for maximum user experience
 - 🔕 Button with the functionality to toggle `.mute`ing the page
 - 🕹️ Personalised favicon for the page
+- 🎨 `flexbox` and CSS `transitions`
 
 
 
