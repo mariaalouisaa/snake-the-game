@@ -7,18 +7,21 @@ header {
   font-family: "Press Start 2P", cursive;
   font-size: 20px;
   display: flex;
-  justify-self: center;
+  align-items: center;
+  width: 280px;
+  margin: 0 auto;
 }
 
 img {
-  width: 2em;
+  width: 1.5em;
 }
 
 button {
   border-radius: 50%;
-  border: 3px solid rgb(36, 36, 36);
-  width: 3.2em;
-  height: 3.2em;
+  border: 2px solid rgb(36, 36, 36);
+  width: 3em;
+  height: 3em;
+  margin-right: 20px;
 }
 
 canvas {
