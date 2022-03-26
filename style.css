@@ -6,6 +6,19 @@ body {
 header {
   font-family: "Press Start 2P", cursive;
   font-size: 20px;
+  display: flex;
+  justify-self: center;
+}
+
+img {
+  width: 2em;
+}
+
+button {
+  border-radius: 50%;
+  border: 3px solid rgb(36, 36, 36);
+  width: 3.2em;
+  height: 3.2em;
 }
 
 canvas {
