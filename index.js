@@ -7,6 +7,14 @@ const countDownAudio = new Audio("countdown.wav"); // beep mp3
 const foodEatenAudio = new Audio("eating.wav"); // munch mp3
 const gameOverAudio = new Audio("gameover.wav"); // game over mp3
 
+// audio muted on default for accesability purposes
+let muted = true;
+[countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
+  true,
+  true,
+  true,
+];
+
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -280,6 +288,29 @@ window.addEventListener("keydown", startGamePlay);
 
 generateFood(); //generate first food position on load
 displayScore(); //display default score on load
+
+// ------------ PAGE SOUND -------------
+
+// eventListener for sound button
+document.querySelector("button").addEventListener("click", () => {
+  if (muted) {
+    [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
+      false,
+      false,
+      false,
+    ];
+    muted = false;
+    // and change change img src
+  } else if (!muted) {
+    [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
+      true,
+      true,
+      true,
+    ];
+    muted = true;
+    // and change change img src
+  }
+});
 
 // KEY CODES:
 // left = 37
