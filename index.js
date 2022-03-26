@@ -292,7 +292,7 @@ displayScore(); //display default score on load
 // ------------ PAGE SOUND -------------
 
 // eventListener for sound button
-document.querySelector("button").addEventListener("click", () => {
+document.querySelector("button").addEventListener("click", (e) => {
   if (muted) {
     [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
       false,
@@ -300,7 +300,7 @@ document.querySelector("button").addEventListener("click", () => {
       false,
     ];
     muted = false;
-    // and change change img src
+    e.target.src = "mute.png";
   } else if (!muted) {
     [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
       true,
@@ -308,7 +308,7 @@ document.querySelector("button").addEventListener("click", () => {
       true,
     ];
     muted = true;
-    // and change change img src
+    e.target.src = "sound.png";
   }
 });
 
