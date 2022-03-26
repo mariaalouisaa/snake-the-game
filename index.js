@@ -7,6 +7,13 @@ const countDownAudio = new Audio("countdown.wav"); // beep mp3
 const foodEatenAudio = new Audio("eating.wav"); // munch mp3
 const gameOverAudio = new Audio("gameover.wav"); // game over mp3
 
+//muted on default
+[countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
+  true,
+  true,
+  true,
+];
+
 // establishing canvas on the page
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
