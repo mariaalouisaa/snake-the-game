@@ -255,6 +255,15 @@ const collisionDetect = () => {
   ) {
     gameOver();
   }
+  //check if front of snake hits any other snake part
+  for (let i = 1; i < snakeParts.length; i++) {
+    if (
+      snakeParts[0].x === snakeParts[i].x &&
+      snakeParts[0].y === snakeParts[i].y
+    ) {
+      gameOver();
+    }
+  }
 };
 
 // ------------ GAME OVER -------------
