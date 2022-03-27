@@ -255,6 +255,7 @@ const collisionDetect = () => {
   ) {
     gameOver();
   }
+
   //check if front of snake hits any other snake part
   for (let i = 1; i < snakeParts.length; i++) {
     if (
@@ -290,6 +291,11 @@ const gameOver = () => {
   ];
   //reset score
   score = 0;
+  //reset speed
+  speed = 250;
+  //reset direction on start
+  xDirection = 20;
+  yDirection = 0;
 };
 
 // eventListner on the page
