@@ -1,6 +1,8 @@
-# snake-the-game
+# 🐍 snake-the-game
 
-### My attempt at recreating the classic retro game **SNAKE** 🐍 in vanilla JS!
+### My attempt at recreating the classic retro game **SNAKE** in vanilla JS!
+
+⚠️ Hit the wall or the snake itself and it's game over! How high of a score can you get?!
 
 *Almost entirely made with the `canvas` element*.
 
@@ -23,7 +25,6 @@
 ---
 
 ### Still to do: 
-- [ ] Game ends if snake touches itself.
 - [ ] Research resposive design for canvas & unit testing for canvas
 
 *Please see issue for more information.*
@@ -31,6 +32,12 @@
 ---
 
 #### Screenshots of project coming soon!
+
+---
+
+**Notes on the `<canvas>` element and accessability:**
+
+Canvas content is not exposed to accessibility tools as semantic HTML is. In general, you should avoid using canvas in an accessible website or app. More info availble on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas).
 
 --- 
 
