@@ -3,9 +3,9 @@
 let gameStarted = false;
 let isGameOver = false;
 let countdownText = 4;
-const countDownAudio = new Audio("audio/countdown.wav"); // beep mp3
-const foodEatenAudio = new Audio("audio/eating.wav"); // munch mp3
-const gameOverAudio = new Audio("audio/gameover.wav"); // game over mp3
+const countDownAudio = new Audio("audio/countdown.wav");
+const foodEatenAudio = new Audio("audio/eating.wav");
+const gameOverAudio = new Audio("audio/gameover.wav");
 
 // audio muted on default for accesability purposes
 let muted = true;
@@ -136,10 +136,7 @@ const displayCountDown = () => {
       ctx.fillText(countdownText, canvas.height / 2, canvas.width / 2);
     })
     .then(() => delay()) // settimeout
-    .then(() => {
-      // clearBoard to get rid of old text
-      clearBoard();
-    })
+    .then(() => clearBoard()) // rid of old text
     .then(() => {
       countdownText !== "GO!" ? displayCountDown() : playSnake();
     });
