@@ -3,9 +3,9 @@
 let gameStarted = false;
 let isGameOver = false;
 let countdownText = 4;
-const countDownAudio = new Audio("countdown.wav"); // beep mp3
-const foodEatenAudio = new Audio("eating.wav"); // munch mp3
-const gameOverAudio = new Audio("gameover.wav"); // game over mp3
+const countDownAudio = new Audio("audio/countdown.wav"); // beep mp3
+const foodEatenAudio = new Audio("audio/eating.wav"); // munch mp3
+const gameOverAudio = new Audio("audio/gameover.wav"); // game over mp3
 
 // audio muted on default for accesability purposes
 let muted = true;
