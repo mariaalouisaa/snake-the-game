@@ -3,9 +3,9 @@
 let gameStarted = false;
 let isGameOver = false;
 let countdownText = 4;
-const countDownAudio = new Audio("countdown.wav"); // beep mp3
-const foodEatenAudio = new Audio("eating.wav"); // munch mp3
-const gameOverAudio = new Audio("gameover.wav"); // game over mp3
+const countDownAudio = new Audio("audio/countdown.wav");
+const foodEatenAudio = new Audio("audio/eating.wav");
+const gameOverAudio = new Audio("audio/gameover.wav");
 
 // audio muted on default for accesability purposes
 let muted = true;
@@ -136,10 +136,7 @@ const displayCountDown = () => {
       ctx.fillText(countdownText, canvas.height / 2, canvas.width / 2);
     })
     .then(() => delay()) // settimeout
-    .then(() => {
-      // clearBoard to get rid of old text
-      clearBoard();
-    })
+    .then(() => clearBoard()) // rid of old text
     .then(() => {
       countdownText !== "GO!" ? displayCountDown() : playSnake();
     });
@@ -180,6 +177,13 @@ const generateFood = () => {
   foodx = random1 - (random1 % 20); // must be multiple of 20
   let random2 = Math.random() * (420 - 60) + 60; // not top 60px of board
   foody = random2 - (random2 % 20);
+
+  // check if food position is beneath snake
+  for (let i = 0; i < snakeParts.length; i++) {
+    if (snakeParts[i].x === foodx.x && snakeParts[i].y === foody.y) {
+      generateFood();
+    }
+  }
 };
 
 const drawSnake = () => {
@@ -315,7 +319,7 @@ document.querySelector("button").addEventListener("click", (e) => {
       false,
     ];
     muted = false;
-    e.target.src = "mute.png";
+    e.target.src = "images/mute.png";
   } else if (!muted) {
     [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
       true,
@@ -323,7 +327,7 @@ document.querySelector("button").addEventListener("click", (e) => {
       true,
     ];
     muted = true;
-    e.target.src = "sound.png";
+    e.target.src = "images/sound.png";
   }
 });
 
@@ -332,7 +336,3 @@ document.querySelector("button").addEventListener("click", (e) => {
 // up = 38
 // right = 39
 // down = 40
-
-// ---- NEXT STEPS!! ----
-// Final collision detection -if snake hits self game over
-// add mute button??
