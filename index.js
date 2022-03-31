@@ -180,6 +180,13 @@ const generateFood = () => {
   foodx = random1 - (random1 % 20); // must be multiple of 20
   let random2 = Math.random() * (420 - 60) + 60; // not top 60px of board
   foody = random2 - (random2 % 20);
+
+  // check if food position is beneath snake
+  for (let i = 0; i < snakeParts.length; i++) {
+    if (snakeParts[i].x === foodx.x && snakeParts[i].y === foody.y) {
+      generateFood();
+    }
+  }
 };
 
 const drawSnake = () => {
@@ -332,7 +339,3 @@ document.querySelector("button").addEventListener("click", (e) => {
 // up = 38
 // right = 39
 // down = 40
-
-// ---- NEXT STEPS!! ----
-// Final collision detection -if snake hits self game over
-// add mute button??
