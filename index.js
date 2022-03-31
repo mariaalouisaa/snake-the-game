@@ -322,7 +322,7 @@ document.querySelector("button").addEventListener("click", (e) => {
       false,
     ];
     muted = false;
-    e.target.src = "mute.png";
+    e.target.src = "images/mute.png";
   } else if (!muted) {
     [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
       true,
@@ -330,7 +330,7 @@ document.querySelector("button").addEventListener("click", (e) => {
       true,
     ];
     muted = true;
-    e.target.src = "sound.png";
+    e.target.src = "images/sound.png";
   }
 });
 
