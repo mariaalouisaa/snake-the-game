@@ -310,19 +310,21 @@ displayScore(); //display default score on load
 
 // ------------ PAGE SOUND -------------
 
-// eventListener for sound button
+// eventListener for mute sound & image toggle
 document.querySelector("button").addEventListener("click", (e) => {
-  muted ? (muted = false) : (muted = true);
+  if (muted) {
+    muted = false;
+    e.target.src = "images/mute.png";
+  } else {
+    muted = true;
+    e.target.src = "images/sound.png";
+  }
+
   [countDownAudio.muted, foodEatenAudio.muted, gameOverAudio.muted] = [
     muted,
     muted,
     muted,
   ];
-
-  //toggle image
-  e.target.src = "images/mute.png"
-    ? (e.target.src = "images/sound.png")
-    : (e.target.src = "images/mute.png");
 });
 
 // KEY CODES:
