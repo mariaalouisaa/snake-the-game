@@ -38,6 +38,9 @@ Canvas content is not exposed to accessibility tools as semantic HTML is. In gen
 
 ### Still to do: 
 - [ ] Research resposive design for canvas & unit testing for canvas
+- [ ] Add extra game features:
+- one could be a coloured cube to avoid. Will flash and disappear after 5 secs.
+- one could be bonus food to catch for extra points, again disappear after a few secs.
 
 ---
 
